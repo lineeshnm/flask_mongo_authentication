@@ -2,6 +2,7 @@ import datetime
 from app import db
 
 class User(db.Document):
+	name: db.StringField(default=True)
 	email = db.EmailField(unique=True)
 	password = db.StringField(default=True)
 	active = db.BooleanField(default=True)

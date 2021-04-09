@@ -1,16 +1,19 @@
 import os
 
 from flask import Flask, render_template, request, redirect  # etc.
-from flask.ext.mongoengine import MongoEngine, MongoEngineSessionInterface
-from flask.ext.login import LoginManager
-from flask.ext.bcrypt import Bcrypt
+from flask_mongoengine import MongoEngine, MongoEngineSessionInterface
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 
 # Create and name Flask app
 app = Flask("FlaskLoginApp")
 
 # database connection
-app.config['MONGODB_SETTINGS'] = {'HOST':os.environ.get('MONGOLAB_URI'),'DB': 'FlaskLogin'}
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+MONGOLAB_URI='mongodb://localhost:27017'
+SECRET_KEY = os.urandom(32)
+# app.config['MONGODB_SETTINGS'] = {'HOST':os.environ.get('MONGOLAB_URI'),'DB': 'FlaskLogin'}
+app.config['MONGODB_SETTINGS'] = {'HOST':MONGOLAB_URI,'DB': 'FlaskLogin'}
+app.config['SECRET_KEY'] = SECRET_KEY
 app.debug = os.environ.get('DEBUG',False)
 
 db = MongoEngine(app) # connect MongoEngine with Flask App
